@@ -1,0 +1,385 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuaderno de handpan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E2D7; --card:#F5F2EB; --card2:#EFEBE1;
+    --ink:#2A2622; --ink2:#5C554B; --faint:#8A8175;
+    --line:#D3CBBB; --line2:#C2B8A4;
+    --bronze:#A6763C; --bronze-d:#6E4C22; --bronze-bg:#EFE2CF;
+    --slate:#456068; --slate-bg:#DCE5E4;
+    --danger:#9A3B2E;
+    --r:10px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Karla",system-ui,sans-serif; font-size:16px; line-height:1.5;
+    -webkit-font-smoothing:antialiased; padding:28px 20px 60px;
+  }
+  .wrap{max-width:960px;margin:0 auto}
+
+  header.top{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+  .mark{width:42px;height:42px;flex:none}
+  .mark circle{stroke:var(--bronze);fill:none;stroke-width:1.4}
+  .mark .ding{fill:var(--bronze);stroke:none}
+  h1{font-family:"Fraunces",serif;font-weight:600;font-size:30px;line-height:1;margin:0;letter-spacing:-.01em}
+  .sub{color:var(--ink2);font-size:14px;margin:2px 0 0}
+
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+  .field{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:8px 12px;flex:1 1 150px;min-width:130px}
+  .field label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:3px}
+  .field input{width:100%;border:0;background:transparent;font-family:inherit;font-size:16px;color:var(--ink);padding:0}
+  .field input:focus{outline:none}
+
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 6px;align-items:center}
+  button{font-family:"Karla",sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);padding:8px 14px;transition:background .12s,border-color .12s,transform .05s}
+  button:hover{background:var(--card2);border-color:var(--bronze)}
+  button:active{transform:translateY(1px)}
+  button:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+  button.primary{background:var(--bronze);border-color:var(--bronze);color:#fff}
+  button.primary:hover{background:var(--bronze-d)}
+  button.ghost{background:transparent;border-color:transparent;color:var(--ink2)}
+  button.ghost:hover{background:var(--card2);color:var(--ink)}
+  .spacer{flex:1}
+
+  .sec{font-family:"Fraunces",serif;font-weight:500;font-size:20px;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+  .sec .rule{flex:1;height:1px;background:var(--line)}
+
+  .subbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:6px}
+  .subbar .lab{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  .seg{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden}
+  .seg button{border:0;border-radius:0;border-right:1px solid var(--line2);padding:7px 14px;background:var(--card2)}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--bronze);color:#fff}
+  .seg button.on:hover{background:var(--bronze-d)}
+  .sub-cap{color:var(--ink2);font-size:14px}
+  .sub-cap b{color:var(--bronze-d);font-weight:700}
+
+  .legend{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+  .leg-row{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+  .leg-row:last-child{margin-bottom:0}
+  .leg-sym{font-family:"JetBrains Mono",monospace;font-weight:700;width:52px;flex:none;text-align:center;background:var(--bronze-bg);color:var(--bronze-d);border:1px solid var(--line2);border-radius:6px;padding:6px 0}
+  .leg-sym:focus{outline:2px solid var(--bronze);outline-offset:1px}
+  .leg-mean{flex:1;border:1px solid var(--line);border-radius:6px;padding:6px 10px;background:#fff;font-family:inherit;font-size:15px;color:var(--ink)}
+  .leg-mean:focus{outline:none;border-color:var(--bronze)}
+  .leg-del{color:var(--faint);border:0;background:transparent;padding:4px 8px;font-size:18px;line-height:1}
+  .leg-del:hover{color:var(--danger);background:transparent}
+
+  .measures{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+  .measure{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px;position:relative}
+  .m-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:10px}
+  .m-num{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--faint);letter-spacing:.08em}
+  .m-tools{display:flex;gap:4px}
+  .m-tools button{padding:3px 9px;font-size:12px;line-height:1.2;border-color:var(--line)}
+  .mbody{display:flex;align-items:flex-start}
+  .bgroup{display:flex;flex-direction:column;align-items:center;padding:0 9px}
+  .tlabel{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);margin-bottom:7px;letter-spacing:.05em}
+  .bcells{display:flex;gap:5px}
+  .barline{width:1.5px;align-self:stretch;background:var(--line2);margin-top:24px;border-radius:2px}
+  .beat{width:42px;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .acc{width:13px;height:13px;border-radius:50%;border:1px solid var(--line2);background:transparent;padding:0;cursor:pointer}
+  .acc.on{background:var(--bronze);border-color:var(--bronze);box-shadow:0 0 0 2px var(--bronze-bg)}
+  .note{width:100%;text-align:center;font-family:"JetBrains Mono",monospace;font-size:17px;font-weight:500;border:1px solid var(--line2);border-radius:8px;background:#fff;color:var(--ink);padding:8px 0}
+  .note:focus{outline:none;border-color:var(--bronze);box-shadow:0 0 0 2px var(--bronze-bg)}
+  .note.accented{font-weight:700;color:var(--bronze-d);border-color:var(--bronze)}
+  .hand{width:100%;text-align:center;font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:6px;background:var(--slate-bg);color:var(--slate);padding:4px 0;cursor:pointer;letter-spacing:.05em}
+  .hand:hover{border-color:var(--slate)}
+  .hand.empty{color:var(--faint);background:transparent}
+  .add-measure{align-self:stretch;min-width:74px;border:1.5px dashed var(--line2);border-radius:14px;background:transparent;color:var(--ink2);font-size:26px;display:flex;align-items:center;justify-content:center}
+  .add-measure:hover{border-color:var(--bronze);color:var(--bronze);background:var(--card)}
+
+  .export-box{background:#211D19;color:#EDE6D8;border-radius:var(--r);padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:13.5px;line-height:1.7;white-space:pre;overflow-x:auto}
+  .export-actions{display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap}
+  .hint{color:var(--faint);font-size:13px}
+
+  .saved{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:5px 6px 5px 14px;font-size:14px}
+  .chip button{border:0;background:transparent;padding:2px 6px;font-size:13px;color:var(--bronze-d)}
+  .chip button.x{color:var(--faint)}
+  .chip button.x:hover{color:var(--danger)}
+  .chip button:hover{background:transparent}
+  .empty-note{color:var(--faint);font-size:14px;font-style:italic}
+
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:22px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:560px){
+    body{padding:20px 14px 60px}
+    h1{font-size:25px}
+    .beat{width:38px}
+    .note{font-size:15px}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .toolbar,.add-measure,.m-tools,.export-actions,.leg-del,.saved,.top .mark,.subbar .seg{display:none!important}
+    .measure,.legend,.field,.subbar{border-color:#bbb;background:#fff;break-inside:avoid}
+    .export-box{background:#fff;color:#000;border:1px solid #bbb}
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <svg class="mark" viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/><circle class="ding" cx="22" cy="22" r="4.5"/><circle cx="22" cy="35" r="2.4"/><circle cx="11.5" cy="30" r="2.4"/><circle cx="32.5" cy="30" r="2.4"/><circle cx="8" cy="22" r="2.4"/><circle cx="36" cy="22" r="2.4"/><circle cx="11.5" cy="14" r="2.4"/><circle cx="32.5" cy="14" r="2.4"/><circle cx="22" cy="9" r="2.4"/></svg>
+    <div>
+      <h1>Cuaderno de handpan</h1>
+      <p class="sub">Anotá tu composición por números y ritmo. Guardá, descargá en PDF y compartí.</p>
+    </div>
+  </header>
+
+  <div class="meta">
+    <div class="field"><label>Título</label><input id="f-title" placeholder="Sin título"></div>
+    <div class="field"><label>Escala</label><input id="f-scale" placeholder="D Kurd, Amara…"></div>
+    <div class="field" style="flex:0 1 110px"><label>Compás</label><input id="f-meter" placeholder="4/4"></div>
+    <div class="field" style="flex:0 1 110px"><label>BPM</label><input id="f-bpm" placeholder="—"></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" onclick="app.pdf()">Descargar PDF</button>
+    <button onclick="app.exportOpen()">Ver / copiar notación</button>
+    <button onclick="app.save()">Guardar</button>
+    <span class="spacer"></span>
+    <button class="ghost" onclick="app.newBlank()">Empezar de cero</button>
+  </div>
+
+  <div class="sec">Ritmo <span class="rule"></span></div>
+  <div class="subbar">
+    <span class="lab">Subdivisión</span>
+    <div class="seg" id="seg">
+      <button data-n="1" onclick="app.setSub(1)">Negras</button>
+      <button data-n="2" onclick="app.setSub(2)">Corcheas</button>
+      <button data-n="3" onclick="app.setSub(3)">Tresillos</button>
+      <button data-n="4" onclick="app.setSub(4)">Semicorcheas</button>
+    </div>
+    <span class="sub-cap" id="sub-cap"></span>
+  </div>
+
+  <div class="sec">Leyenda <span class="rule"></span> <button style="font-size:13px;padding:5px 12px" onclick="app.addLegend()">+ símbolo</button></div>
+  <div class="legend" id="legend"></div>
+
+  <div class="sec">Compases <span class="rule"></span></div>
+  <div class="measures" id="measures"></div>
+
+  <div class="sec">Guardadas <span class="rule"></span></div>
+  <div class="saved" id="saved"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const HANDS = ["", "R", "L"];
+const SUBS = {
+  1:{name:"negras",       per:"1 por tiempo"},
+  2:{name:"corcheas",     per:"2 por tiempo"},
+  3:{name:"tresillos",    per:"3 por tiempo"},
+  4:{name:"semicorcheas", per:"4 por tiempo"}
+};
+
+/* ---- storage: browser localStorage, con respaldo en memoria ---- */
+const mem = {};
+const store = {
+  ok:(function(){ try{ localStorage.setItem("__hp_t","1"); localStorage.removeItem("__hp_t"); return true; }catch(e){ return false; } })(),
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return (k in mem)?mem[k]:null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){ delete mem[k]; } },
+  keys(pfx){ try{ return Object.keys(localStorage).filter(x=>x.indexOf(pfx)===0); }catch(e){ return Object.keys(mem).filter(x=>x.indexOf(pfx)===0); } }
+};
+
+function blankCell(){ return { note:".", hand:0, accent:false }; }
+function makeBeat(sub){ return { cells: Array.from({length:sub},()=>blankCell()) }; }
+function makeMeasure(sub,nBeats){ return { beats: Array.from({length:nBeats||2},()=>makeBeat(sub)) }; }
+function fresh(){
+  return {
+    title:"", scale:"D Kurd", meter:"4/4", bpm:"80", subdivision:4,
+    legend:[
+      {sym:"D", mean:"golpe en el Ding (centro)"},
+      {sym:"1–8", mean:"campos tonales, del grave al agudo"},
+      {sym:"g", mean:"Gu — hueco grave de abajo"},
+      {sym:"s", mean:"slap / mute (apagar la nota)"},
+      {sym:"~", mean:"roll / trémolo sobre un campo"},
+      {sym:".", mean:"silencio o sostener"}
+    ],
+    measures:[ makeMeasure(4,2), makeMeasure(4,2) ]
+  };
+}
+
+let state = fresh();
+
+const app = {
+  bindMeta(){
+    ["title","scale","meter","bpm"].forEach(k=>{
+      const el=$("f-"+k); el.value=state[k]||"";
+      el.oninput=()=>{ state[k]=el.value; };
+    });
+  },
+
+  renderSub(){
+    [...$("seg").children].forEach(b=>b.classList.toggle("on", +b.dataset.n===state.subdivision));
+    const s=SUBS[state.subdivision];
+    $("sub-cap").innerHTML="Cada casillero vale una <b>"+s.name.replace(/s$/,"")+"a</b> · "+s.per+".";
+  },
+  setSub(n){
+    state.subdivision=n;
+    state.measures.forEach(m=>m.beats.forEach(b=>{
+      while(b.cells.length<n) b.cells.push(blankCell());
+      while(b.cells.length>n) b.cells.pop();
+    }));
+    app.renderSub(); app.renderMeasures();
+  },
+
+  renderLegend(){
+    const box=$("legend"); box.innerHTML="";
+    state.legend.forEach((row,i)=>{
+      const r=document.createElement("div"); r.className="leg-row";
+      const sym=document.createElement("input"); sym.className="leg-sym"; sym.value=row.sym; sym.oninput=()=>row.sym=sym.value;
+      const mean=document.createElement("input"); mean.className="leg-mean"; mean.value=row.mean; mean.oninput=()=>row.mean=mean.value;
+      const del=document.createElement("button"); del.className="leg-del"; del.textContent="×"; del.title="Quitar";
+      del.onclick=()=>{ state.legend.splice(i,1); app.renderLegend(); };
+      r.append(sym,mean,del); box.append(r);
+    });
+  },
+  addLegend(){ state.legend.push({sym:"",mean:""}); app.renderLegend(); },
+
+  renderMeasures(){
+    const box=$("measures"); box.innerHTML="";
+    state.measures.forEach((m,mi)=>{
+      const card=document.createElement("div"); card.className="measure";
+      const head=document.createElement("div"); head.className="m-head";
+      const num=document.createElement("span"); num.className="m-num"; num.textContent="COMPÁS "+(mi+1);
+      const tools=document.createElement("div"); tools.className="m-tools";
+      tools.append(
+        btn("+ tiempo",()=>{ m.beats.push(makeBeat(state.subdivision)); app.renderMeasures(); }),
+        btn("− tiempo",()=>{ if(m.beats.length>1){ m.beats.pop(); app.renderMeasures(); } }),
+        (()=>{ const b=btn("borrar",()=>{ state.measures.splice(mi,1); app.renderMeasures(); }); b.style.color="var(--danger)"; return b; })()
+      );
+      head.append(num,tools); card.append(head);
+
+      const body=document.createElement("div"); body.className="mbody";
+      m.beats.forEach((beat,bi)=>{
+        if(bi>0){ const bar=document.createElement("div"); bar.className="barline"; body.append(bar); }
+        const grp=document.createElement("div"); grp.className="bgroup";
+        const lab=document.createElement("div"); lab.className="tlabel"; lab.textContent="tiempo "+(bi+1);
+        const cells=document.createElement("div"); cells.className="bcells";
+        beat.cells.forEach(c=>{
+          const cell=document.createElement("div"); cell.className="beat";
+          const acc=document.createElement("button"); acc.className="acc"+(c.accent?" on":""); acc.title="Acento";
+          acc.onclick=()=>{ c.accent=!c.accent; app.renderMeasures(); };
+          const note=document.createElement("input"); note.className="note"+(c.accent?" accented":""); note.value=c.note; note.maxLength=3;
+          note.oninput=()=>{ c.note=note.value; };
+          const hand=document.createElement("button"); hand.className="hand"+(c.hand===0?" empty":""); hand.textContent=HANDS[c.hand]||"·"; hand.title="Mano (– / R / L)";
+          hand.onclick=()=>{ c.hand=(c.hand+1)%3; app.renderMeasures(); };
+          cell.append(acc,note,hand); cells.append(cell);
+        });
+        grp.append(lab,cells); body.append(grp);
+      });
+      card.append(body); box.append(card);
+    });
+    const add=document.createElement("button"); add.className="add-measure"; add.textContent="+"; add.title="Agregar compás";
+    add.onclick=()=>{ state.measures.push(makeMeasure(state.subdivision,2)); app.renderMeasures(); };
+    box.append(add);
+  },
+
+  newBlank(){ state=fresh(); app.renderAll(); app.toast("Cuaderno en blanco"); },
+
+  buildText(){
+    const pad3 = s => { s=(s==null?"":String(s)); if(s.length>=3) return s.slice(0,3); const t=3-s.length,l=Math.floor(t/2),r=t-l; return " ".repeat(l)+s+" ".repeat(r); };
+    const s=SUBS[state.subdivision];
+    let out=[];
+    out.push((state.title||"Sin título").toUpperCase());
+    out.push("Escala: "+state.scale+"   ·   Compás: "+state.meter+"   ·   "+state.bpm+" BPM");
+    out.push("Subdivisión: "+s.name+" ("+s.per+")");
+    out.push("");
+    out.push("LEYENDA");
+    state.legend.forEach(l=>{ if(l.sym||l.mean) out.push("  "+(l.sym+"        ").slice(0,8)+"  "+l.mean); });
+    out.push("");
+    out.push("(los números de arriba marcan el tiempo · | separa tiempos)");
+    out.push("");
+    state.measures.forEach(m=>{
+      let t="",n="",h="",a="";
+      m.beats.forEach((beat,bi)=>{
+        if(bi>0){ t+="   "; n+=" | "; h+="   "; a+="   "; }
+        beat.cells.forEach((c,ci)=>{
+          t+= ci===0 ? pad3(String(bi+1)) : pad3("");
+          n+= pad3(c.note);
+          h+= pad3(HANDS[c.hand]||"");
+          a+= pad3(c.accent?">":"");
+        });
+      });
+      if(a.trim()) out.push("  "+a);
+      out.push("  "+t);
+      out.push("| "+n+" |");
+      if(h.trim()) out.push("  "+h);
+      out.push("");
+    });
+    return out.join("\n").replace(/\n{3,}/g,"\n\n").trimEnd();
+  },
+  exportOpen(){
+    const txt=app.buildText();
+    let ov=$("export-ov");
+    if(!ov){ ov=document.createElement("div"); ov.id="export-ov"; ov.style.cssText="margin:20px 0 0"; $("measures").parentNode.insertBefore(ov,$("measures").nextSibling); }
+    ov.innerHTML="";
+    const pre=document.createElement("div"); pre.className="export-box"; pre.textContent=txt;
+    const act=document.createElement("div"); act.className="export-actions";
+    const copy=document.createElement("button"); copy.className="primary"; copy.textContent="Copiar al portapapeles";
+    copy.onclick=async()=>{ try{ await navigator.clipboard.writeText(txt); app.toast("Copiado ✓"); }catch(e){ app.toast("No se pudo copiar — seleccioná y copiá a mano"); } };
+    const dl=document.createElement("button"); dl.textContent="Bajar .txt";
+    dl.onclick=()=>{ const b=new Blob([txt],{type:"text/plain"}); const u=URL.createObjectURL(b); const a=document.createElement("a"); a.href=u; a.download=((state.title||"handpan").replace(/[^\w\-]+/g,"_"))+".txt"; a.click(); URL.revokeObjectURL(u); };
+    const hint=document.createElement("span"); hint.className="hint"; hint.textContent="Listo para pegar en Word, notas o mandar por chat.";
+    act.append(copy,dl,hint); ov.append(pre,act);
+    ov.scrollIntoView({behavior:"smooth",block:"nearest"});
+  },
+
+  pdf(){
+    document.title = (state.title && state.title.trim()) ? state.title.trim() : "Cuaderno de handpan";
+    app.toast("Elegí “Guardar como PDF” en el diálogo");
+    setTimeout(()=>window.print(), 350);
+  },
+
+  save(){
+    let name=prompt("Nombre para guardar esta composición:", state.title||"Sin título");
+    if(name===null) return; name=name.trim(); if(!name){ app.toast("Poné un nombre"); return; }
+    state.title=name; $("f-title").value=name;
+    store.set("handpan:"+name, JSON.stringify(state));
+    app.renderSaved(); app.toast(store.ok?"Guardada ✓":"Guardada (solo esta sesión)");
+  },
+  load(name){
+    const raw=store.get("handpan:"+name);
+    if(!raw){ app.toast("No se encontró"); return; }
+    try{
+      const loaded=JSON.parse(raw);
+      if(!loaded.subdivision) loaded.subdivision=4;
+      if(loaded.measures) loaded.measures.forEach(m=>{ if(!m.beats){ m.beats=[{cells:m.cells||[blankCell()]}]; delete m.cells; } });
+      state=loaded; app.renderAll(); app.toast("Cargada: "+name);
+    }catch(e){ app.toast("No se pudo cargar"); }
+  },
+  del(name){
+    if(!confirm("¿Borrar \""+name+"\"?")) return;
+    store.del("handpan:"+name); app.renderSaved(); app.toast("Borrada");
+  },
+  renderSaved(){
+    const box=$("saved"); box.innerHTML="";
+    const names=store.keys("handpan:").map(k=>k.replace(/^handpan:/,"")).sort();
+    if(!names.length){
+      box.innerHTML='<span class="empty-note">'+(store.ok?"Todavía no guardaste ninguna. Las que guardes quedan en este navegador.":"El guardado no está disponible acá; en tu navegador normal sí funciona.")+'</span>';
+      return;
+    }
+    names.forEach(n=>{
+      const chip=document.createElement("span"); chip.className="chip";
+      const open=document.createElement("button"); open.textContent=n; open.onclick=()=>app.load(n);
+      const x=document.createElement("button"); x.className="x"; x.textContent="×"; x.title="Borrar"; x.onclick=()=>app.del(n);
+      chip.append(open,x); box.append(chip);
+    });
+  },
+
+  renderAll(){ app.bindMeta(); app.renderSub(); app.renderLegend(); app.renderMeasures(); app.renderSaved(); },
+  toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(app._t); app._t=setTimeout(()=>t.classList.remove("show"),2000); }
+};
+function btn(label,fn){ const b=document.createElement("button"); b.textContent=label; b.onclick=fn; return b; }
+
+app.renderAll();
+</script>
